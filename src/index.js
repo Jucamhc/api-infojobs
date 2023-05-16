@@ -4,8 +4,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 
-let allData = [];
-let data;
+
 app.use(express.json());
 app.use(cors());
 
