@@ -3,13 +3,49 @@ const https = require('https');
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const cvinfo = require('./cvInfo'); // Importa cvInfo.js sin la extensión .js
 
 
 app.use(express.json());
 app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Hola, busca');
+
+    res.send("<h1> API INFOJOBS </h1>" +
+    "<p>" +
+    "<h2>/filtradoSkill</h2>" +
+    "Encontraras el array de mi hoja de vida y al final hay un clave con el nombre filtradoSkill con todos </p> <p> los skill de empleos y skill puestos en su hoja de vida se filta por medio de la funcion buscarCoincidencias</p>");
+
+})
+
+app.get('/filtradoSkill', (req, res) => {
+
+
+    function buscarCoincidencias(cvinfo) {
+        const cvSkills = [
+            ...cvinfo[0].skills.entries.map((entry) => entry.skill),
+            ...cvinfo[0].experiences.entries.flatMap((entry) =>
+                entry.skills.map((skill) => skill)
+            ),
+        ];
+
+        const uniqueSkills = cvSkills.filter((skill, index) => {
+            return cvSkills.indexOf(skill) === index;
+        });
+
+        console.log(uniqueSkills);
+
+        return uniqueSkills
+    }
+
+
+    const resultados = buscarCoincidencias(cvinfo);
+    //console.log(resultados)
+
+    cvinfo[0].filtradoSkill = resultados
+
+    res.send(cvinfo);
+
 });
 
 
@@ -57,11 +93,50 @@ app.get('/api-offers/search', async (req, res) => {
         };
 
         const response = await fetch(`https://www.infojobs.net/webapp/offers/search?keyword=${keyword}&normalizedJobTitleIds=${normalizedJobTitleIds}&provinceIds=${provinceIds}&cityIds=${cityIds}&teleworkingIds=${teleworkingIds}&categoryIds=${categoryIds}&workdayIds=${workdayIds}&educationIds=${educationIds}&segmentId=${segmentId}&contractTypeIds=${contractTypeIds}&page=${page}&sortBy=${sortBy}&onlyForeignCountry=${onlyForeignCountry}&countryIds=${countryIds}&sinceDate=${sinceDate}&subcategoryIds=${subcategoryIds}`, requestOptions);
+
         if (!response.ok) {
             throw new Error('Error en la petición');
         }
+
         let data = await response.json();
-        //console.log(data.offers.length);
+
+
+
+        function buscarCoincidencias(cvinfo, offers) {
+            const cvSkills = [
+                ...cvinfo[0].skills.entries.map((entry) => entry.skill),
+                ...cvinfo[0].experiences.entries.flatMap((entry) =>
+                    entry.skills.map((skill) => skill)
+                ),
+            ];
+
+            const uniqueSkills = cvSkills.filter((skill, index) => {
+                return cvSkills.indexOf(skill) === index;
+            });
+            console.log(uniqueSkills);
+
+
+            const updatedOffers = offers.map((offer) => {
+                const description = offer.description.toLowerCase();
+                let score = 0;
+
+                uniqueSkills.forEach((skill) => {
+                    if (description.includes(skill.toLowerCase())) {
+                        score += 1;
+                    }
+                });
+
+                return { ...offer, score };
+            });
+
+            return updatedOffers
+        }
+
+
+        const offers = buscarCoincidencias(cvinfo, data.offers);
+        data.offers = offers;
+
+
         res.status(200).send(data);
 
     } catch (error) {
@@ -70,7 +145,6 @@ app.get('/api-offers/search', async (req, res) => {
     }
 })
 
-const PORT = process.env.PORT || 80;
+const PORT = process.env.PORT || 3005;
 app.listen(PORT, () => console.log(`Escuchando en el puerto ${PORT}`));
-
 
