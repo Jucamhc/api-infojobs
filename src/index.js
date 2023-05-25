@@ -145,6 +145,6 @@ app.get('/api-offers/search', async (req, res) => {
     }
 })
 
-const PORT = process.env.PORT || 3005;
+const PORT = process.env.PORT || 80;
 app.listen(PORT, () => console.log(`Escuchando en el puerto ${PORT}`));
 
