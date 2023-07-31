@@ -5,27 +5,6 @@ const cors = require('cors');
 const app = express();
 const cvinfo = require('./cvInfo'); // Importa cvInfo.js sin la extensión .js
 
-const myHeaders = {
-    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36",
-    "Authority": "www.infojobs.net",
-    "Method": "GET",
-    "Scheme": "https",
-    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
-    "Accept-Encoding": "gzip, deflate, br",
-    "Accept-Language": "en,es-419;q=0.9,es-ES;q=0.8,es;q=0.7,en-US;q=0.6,es-CO;q=0.5,en-ZA;q=0.4,en-AU;q=0.3,en-CA;q=0.2,en-GB;q=0.1",
-    "Cache-Control": "max-age=0"
-}
-
-const requestOptions = {
-    method: 'GET',
-    headers: myHeaders,
-    redirect: 'follow',
-    agent: new https.Agent({
-        minVersion: 'TLSv1.3',
-        maxVersion: 'TLSv1.3'
-    })
-};
-
 
 app.use(express.json());
 app.use(cors());
@@ -41,6 +20,27 @@ app.get('/', (req, res) => {
 
 app.get('/filtradoSkill', (req, res) => {
 
+    const myHeaders = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36",
+        "Authority": "www.infojobs.net",
+        "Method": "GET",
+        "Scheme": "https",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en,es-419;q=0.9,es-ES;q=0.8,es;q=0.7,en-US;q=0.6,es-CO;q=0.5,en-ZA;q=0.4,en-AU;q=0.3,en-CA;q=0.2,en-GB;q=0.1",
+        "Cache-Control": "max-age=0"
+    }
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
+        agent: new https.Agent({
+            minVersion: 'TLSv1.3',
+            maxVersion: 'TLSv1.3'
+        })
+    };
+    
 
     function buscarCoincidencias(cvinfo) {
         const cvSkills = [
@@ -71,6 +71,28 @@ app.get('/filtradoSkill', (req, res) => {
 
 
 app.get('/api-offers/search', async (req, res) => {
+
+    const myHeaders = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.63 Safari/537.36",
+        "Authority": "www.infojobs.net",
+        "Method": "GET",
+        "Scheme": "https",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Accept-Language": "en,es-419;q=0.9,es-ES;q=0.8,es;q=0.7,en-US;q=0.6,es-CO;q=0.5,en-ZA;q=0.4,en-AU;q=0.3,en-CA;q=0.2,en-GB;q=0.1",
+        "Cache-Control": "max-age=0"
+    }
+    
+    const requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+        redirect: 'follow',
+        agent: new https.Agent({
+            minVersion: 'TLSv1.3',
+            maxVersion: 'TLSv1.3'
+        })
+    };
+    
 
     const keyword = req.query.keyword || '';
     const normalizedJobTitleIds = req.query.normalizedJobTitleIds || '';
