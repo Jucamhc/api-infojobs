@@ -91,6 +91,7 @@ app.get('/api-offers/search', async (req, res) => {
 
     //console.log(keyword);
 
+    
     try {
 
         const response = await fetch(`https://www.infojobs.net/webapp/offers/search?keyword=${keyword}&normalizedJobTitleIds=${normalizedJobTitleIds}&provinceIds=${provinceIds}&cityIds=${cityIds}&teleworkingIds=${teleworkingIds}&categoryIds=${categoryIds}&workdayIds=${workdayIds}&educationIds=${educationIds}&segmentId=${segmentId}&contractTypeIds=${contractTypeIds}&page=${page}&sortBy=${sortBy}&onlyForeignCountry=${onlyForeignCountry}&countryIds=${countryIds}&sinceDate=${sinceDate}&subcategoryIds=${subcategoryIds}`, requestOptions);
@@ -132,10 +133,8 @@ app.get('/api-offers/search', async (req, res) => {
             return updatedOffers
         }
 
-
         const offers = buscarCoincidencias(cvinfo, data.offers);
         data.offers = offers;
-
 
         res.status(200).send(data);
 
