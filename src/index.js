@@ -89,7 +89,7 @@ app.get('/api-offers/search', async (req, res) => {
     const sinceDate = req.query.sinceDate || 'ANY'; // Valor predeterminado: ANY
     const subcategoryIds = req.query.subcategoryIds || '';
 
-    //console.log(keyword);
+    console.log(keyword);
 
     try {
 
