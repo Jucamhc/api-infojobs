@@ -69,6 +69,7 @@ app.get('/filtradoSkill', (req, res) => {
 });
 
 
+
 app.get('/api-offers/search', async (req, res) => {
 
     const keyword = req.query.keyword || '';
@@ -89,7 +90,6 @@ app.get('/api-offers/search', async (req, res) => {
     const subcategoryIds = req.query.subcategoryIds || '';
 
     //console.log(keyword);
-
 
     try {
 
