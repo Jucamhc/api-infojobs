@@ -98,7 +98,7 @@ app.get('/api-offers/search', async (req, res) => {
         console.log("response.status " + response.status);
 
         if (!response.ok) {
-            throw new Error('Error en la petición');
+            throw new Error(`Error en la petición. Estado: ${response.status}, Mensaje: ${response.statusText}`);
         }
 
         let data = await response.json();
