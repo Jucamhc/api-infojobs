@@ -96,6 +96,7 @@ app.get('/api-offers/search', async (req, res) => {
         const response = await fetch(`https://www.infojobs.net/webapp/offers/search?keyword=${keyword}&normalizedJobTitleIds=${normalizedJobTitleIds}&provinceIds=${provinceIds}&cityIds=${cityIds}&teleworkingIds=${teleworkingIds}&categoryIds=${categoryIds}&workdayIds=${workdayIds}&educationIds=${educationIds}&segmentId=${segmentId}&contractTypeIds=${contractTypeIds}&page=${page}&sortBy=${sortBy}&onlyForeignCountry=${onlyForeignCountry}&countryIds=${countryIds}&sinceDate=${sinceDate}&subcategoryIds=${subcategoryIds}`, requestOptions);
 
         console.log("response.status " + response.status);
+        console.log(`Error en la petición. Estado: ${response.status}, Mensaje: ${response.statusText}`);
 
         if (!response.ok) {
             throw new Error(`Error en la petición. Estado: ${response.status}, Mensaje: ${response.statusText}`);
